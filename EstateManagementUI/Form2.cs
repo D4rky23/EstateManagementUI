@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using EstateDataAccess;
 using EstateModels;
 using EstateDataAccess.SqlRepository;
+using System.IO;
 
 
 namespace EstateManagementUI
@@ -126,23 +127,42 @@ namespace EstateManagementUI
                 if (estate?.Pictures != null && estate.Pictures.Count > 0)
                 {
                     var firstPicture = estate.Pictures[0];
-                    string imagePath = firstPicture.FilePath;
-
-                    if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                    string imagePath = firstPicture.FilePath; 
+                   
+                    if (!string.IsNullOrEmpty(imagePath))
                     {
-                        pbEstateImage.Image = Image.FromFile(imagePath);
+                        string fullPath = Path.Combine(@"E:\Anul 2 Sem 1\MIP\EstateManagementUI\Pictures", imagePath); // Calea completă
+
+                       
+                        if (File.Exists(fullPath))
+                        {
+                            try
+                            {
+                                pbEstateImage.Image = Image.FromFile(fullPath); 
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Eroare la încărcarea imaginii: {ex.Message}");
+                                pbEstateImage.Image = null; 
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Imaginea nu a fost găsită: " + fullPath);
+                            pbEstateImage.Image = null;  
+                        }
                     }
                     else
                     {
-                        pbEstateImage.Image = null;
+                        pbEstateImage.Image = null;  
                     }
                 }
                 else
                 {
-                    pbEstateImage.Image = null; 
+                    pbEstateImage.Image = null;  
+                }
             }
         }
 
     }
-}
 }

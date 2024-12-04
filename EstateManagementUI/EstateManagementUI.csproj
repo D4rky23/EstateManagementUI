@@ -34,12 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EstateDataAccess">
-      <HintPath>..\..\EstateManagement\EstateDataAccess\bin\Debug\EstateDataAccess.dll</HintPath>
+      <HintPath>..\..\EstateManagement\EstateDataAccess\obj\Debug\EstateDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="EstateModels">
-      <HintPath>..\..\EstateManagement\EstateDataAccess\bin\Debug\EstateModels.dll</HintPath>
+      <HintPath>..\..\EstateManagement\EstateModels\bin\Debug\EstateModels.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
