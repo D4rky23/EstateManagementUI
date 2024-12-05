@@ -156,17 +156,20 @@ namespace EstateManagementUI
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     selectedImagePath = openFileDialog.FileName;
+                    pbEstateImage.Image = null;
 
                     using (var tempImage = Image.FromFile(selectedImagePath))
                     {
-                        pbEstateImage.Image = new Bitmap(tempImage);
+                        pbEstateImage.Image = new Bitmap(tempImage); 
                     }
                 }
             }
         }
+
 
 
 
@@ -236,17 +239,16 @@ namespace EstateManagementUI
                 }
 
                 var picturesFolder = ConfigurationManager.AppSettings["PicturesFolder"];
+                if (!Directory.Exists(picturesFolder))
+                {
+                    Directory.CreateDirectory(picturesFolder); 
+                }
+
                 var fileName = Path.GetFileName(selectedImagePath);
                 var destinationPath = Path.Combine(picturesFolder, fileName);
 
-               
-                pbEstateImage.Image?.Dispose();
-                pbEstateImage.Image = null;
-
-               
                 File.Copy(selectedImagePath, destinationPath, true);
 
-             
                 var picture = new Picture
                 {
                     EstateId = estateId,
